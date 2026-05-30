@@ -67,7 +67,7 @@ modules_backup_path="${tmp_backup_path}/modules"
 arch_info="$(uname -m)"
 host_release="$(cat /etc/os-release 2>/dev/null | grep '^VERSION_CODENAME=.*' | cut -d"=" -f2)"
 initramfs_conf="/etc/initramfs-tools/update-initramfs.conf"
-khusnan21_release_file="/etc/khusnan21-release"
+khusnan21_release_file="/etc/ophub-release"
 
 # Set the default for downloading kernel sources from github.com
 repo_owner="unifreq"
@@ -311,7 +311,7 @@ init_var() {
     export LOCALVERSION="${custom_name}"
 
     # Get Armbian PLATFORM value
-    PLATFORM="$(cat ${khusnan21_release_file} 2>/dev/null | grep -E "^PLATFORM=.*" | cut -d"'" -f2)"
+    PLATFORM="$(cat ${ophub_release_file} 2>/dev/null | grep -E "^PLATFORM=.*" | cut -d"'" -f2)"
     [[ -n "${PLATFORM}" ]] && echo -e "${INFO} Armbian PLATFORM: [ ${PLATFORM} ]"
 }
 
@@ -998,10 +998,10 @@ EOF
 #!/bin/bash
 set -e
 
-# Read platform info from khusnan21-release
-khusnan21_release_file="/etc/khusnan21-release"
-if [[ -f "${khusnan21_release_file}" ]]; then
-    source "${khusnan21_release_file}"
+# Read platform info from ophub-release
+khusnan21_release_file="/etc/ophub-release"
+if [[ -f "${ophub_release_file}" ]]; then
+    source "${ophub_release_file}"
 fi
 
 cd /boot
